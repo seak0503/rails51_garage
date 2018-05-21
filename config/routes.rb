@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   root to: "users#index"
 
+  resources :users
+
   scope :v1 do
     resources :users, only: [:index]
   end
