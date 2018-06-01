@@ -18,7 +18,9 @@ Doorkeeper.configure do
     User.find_by(email: params[:username])
   end
 
-  access_token_expires_in 60.minutes
+  client_credentials :from_basic, :from_params
+
+  access_token_expires_in 1.minutes
   use_refresh_token
 end
 

@@ -10,7 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180518002123) do
+ActiveRecord::Schema.define(version: 20180522152637) do
+
+  create_table "books", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "books_users", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "book_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["book_id"], name: "index_books_users_on_book_id"
+    t.index ["user_id"], name: "index_books_users_on_user_id"
+  end
+
+  create_table "favorits", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "user_id", null: false
+    t.bigint "book_id", null: false
+    t.boolean "favorit", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_favorits_on_book_id"
+    t.index ["user_id"], name: "index_favorits_on_user_id"
+  end
 
   create_table "oauth_access_grants", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "resource_owner_id", null: false
@@ -59,6 +82,10 @@ ActiveRecord::Schema.define(version: 20180518002123) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "books_users", "books"
+  add_foreign_key "books_users", "users"
+  add_foreign_key "favorits", "books"
+  add_foreign_key "favorits", "users"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
 end
