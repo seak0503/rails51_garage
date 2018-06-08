@@ -17,10 +17,6 @@ Rails.application.routes.draw do
       end
       get 'login' => 'sessions#new', as: :login
       root to: "users#index"
-      #use_doorkeeper do
-      #  controllers applications: 'api_applications'
-      #  skip_controllers :authorized_applications, :authorizations, :tokens, :token_info
-      #end
       resource :session, only: [ :create, :destroy ]
       resources :users
     end
