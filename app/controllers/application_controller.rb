@@ -29,13 +29,4 @@ class ApplicationController < ActionController::Base
       status: status_code
     }
   end
-
-  private
-  def current_user
-    if session[:current_user_id]
-      @current_account ||= User.find(session[:current_user_id])
-    end
-  end
-
-  helper_method :current_user
 end

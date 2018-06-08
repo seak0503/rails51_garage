@@ -1,14 +1,37 @@
 Rails.application.routes.draw do
-  use_doorkeeper
+  config = Rails.application.config.garage
 
-  get 'login' => 'sessions#new', as: :login
-  root to: "users#index"
+  constraints host: config[:staff][:host] do
+    scope :staff do
+      use_doorkeeper do
+        skip_controllers :applications, :authorized_applications, :token_info
+      end
+    end
 
-  resource :session, only: [ :create, :destroy ]
+    namespace :staff, path: config[:staff][:path] do
+      get 'login' => 'sessions#new', as: :login
+      root to: "users#index"
+      use_doorkeeper do
+        controllers applications: 'api_applications'
+        skip_controllers :authorized_applications, :authorizations, :tokens, :token_info
+      end
+      resource :session, only: [ :create, :destroy ]
+      resources :users
+    end
+  end
 
-  resources :users
+  constraints host: config[:account][:host] do
+    scope :account do
+      use_doorkeeper do
+        skip_controllers :applications, :authorized_applications, :token_info
+      end
+    end
 
-  scope :v1 do
-    resources :users, only: [:index]
+    namespace :account, path: config[:account][:path] do
+      get 'login' => 'sessions#new', as: :login
+      root to: "users#index"
+      resource :session, only: [ :create, :destroy ]
+      resources :users
+    end
   end
 end

@@ -9,7 +9,7 @@
   </head>
 
   <body>
-    <%= link_to 'ログアウト', :session, method: :delete if current_user %>
+    <%= link_to 'ログアウト', :staff_session, method: :delete if current_staff %>
     <%= yield %>
   </body>
 </html>

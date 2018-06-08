@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class Staff::UsersController < Staff::Base
   #include Garage::RestfulActions
 
   def index

@@ -15,7 +15,7 @@ Doorkeeper.configure do
   optional_scopes(*Garage::TokenScope.optional_scopes)
 
   resource_owner_authenticator do
-    User.find_by(id: session[:current_user_id]) || redirect_to(login_url)
+    User.find(resource_owner_id)
   end
 
   client_credentials :from_basic, :from_params
