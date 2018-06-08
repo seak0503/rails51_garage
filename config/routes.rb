@@ -10,6 +10,11 @@ Rails.application.routes.draw do
     end
 
     namespace :staff, path: config[:staff][:path] do
+      namespace :api do
+        namespace :v1 do
+          resources :users
+        end
+      end
       get 'login' => 'sessions#new', as: :login
       root to: "users#index"
       #use_doorkeeper do

@@ -11,7 +11,7 @@ class User < ApplicationRecord
   property :name
   property :email
 
-  collection :favorits
+  collection :books
 
 
   def self.build_permissions(perms, other, target)
