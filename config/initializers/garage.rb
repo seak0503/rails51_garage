@@ -1,4 +1,8 @@
-Garage.configure {}
+Garage.configure {
+  def cast_resource
+  end
+}
+
 Garage::TokenScope.configure do
   register :public, desc: 'accessing publicly available data' do
     access :read, User
@@ -20,7 +24,7 @@ Doorkeeper.configure do
 
   client_credentials :from_basic, :from_params
 
-  access_token_expires_in 60.minutes
+  access_token_expires_in 3600.minutes
   use_refresh_token
 end
 

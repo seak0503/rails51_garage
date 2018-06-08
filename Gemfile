@@ -17,6 +17,7 @@ gem 'jbuilder', '~> 2.5'
 # Garage関連
 gem 'the_garage'
 gem 'garage-doorkeeper'
+gem 'kaminari'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
