@@ -9,6 +9,7 @@
   </head>
 
   <body>
+    <%= link_to 'ログアウト', :session, method: :delete if current_user %>
     <%= yield %>
   </body>
 </html>

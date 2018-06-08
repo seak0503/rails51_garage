@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   use_doorkeeper
 
+  get 'login' => 'sessions#new', as: :login
   root to: "users#index"
+
+  resource :session, only: [ :create, :destroy ]
 
   resources :users
 

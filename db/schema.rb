@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20180522152637) do
   end
 
   create_table "oauth_access_grants", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "resource_owner_id", null: false
+    t.bigint "resource_owner_id", null: false
     t.bigint "application_id", null: false
     t.string "token", null: false
     t.integer "expires_in", null: false
@@ -45,11 +45,12 @@ ActiveRecord::Schema.define(version: 20180522152637) do
     t.datetime "revoked_at"
     t.string "scopes"
     t.index ["application_id"], name: "index_oauth_access_grants_on_application_id"
+    t.index ["resource_owner_id"], name: "fk_rails_330c32d8d9"
     t.index ["token"], name: "index_oauth_access_grants_on_token", unique: true
   end
 
   create_table "oauth_access_tokens", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "resource_owner_id"
+    t.bigint "resource_owner_id"
     t.bigint "application_id"
     t.string "token", null: false
     t.string "refresh_token"
@@ -60,7 +61,7 @@ ActiveRecord::Schema.define(version: 20180522152637) do
     t.string "previous_refresh_token", default: "", null: false
     t.index ["application_id"], name: "index_oauth_access_tokens_on_application_id"
     t.index ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true
-    t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id"
+    t.index ["resource_owner_id"], name: "fk_rails_ee63f25419"
     t.index ["token"], name: "index_oauth_access_tokens_on_token", unique: true
   end
 
@@ -78,6 +79,7 @@ ActiveRecord::Schema.define(version: 20180522152637) do
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.string "email"
+    t.string "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -87,5 +89,7 @@ ActiveRecord::Schema.define(version: 20180522152637) do
   add_foreign_key "favorits", "books"
   add_foreign_key "favorits", "users"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
+  add_foreign_key "oauth_access_grants", "users", column: "resource_owner_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
 end

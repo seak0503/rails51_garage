@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  include Garage::ControllerHelper
+  #include Garage::ControllerHelper
 
   def current_resource_owner
     @current_resource_owner ||= User.find(resource_owner_id) if resource_owner_id
@@ -29,4 +29,13 @@ class ApplicationController < ActionController::Base
       status: status_code
     }
   end
+
+  private
+  def current_user
+    if session[:current_user_id]
+      @current_account ||= User.find(session[:current_user_id])
+    end
+  end
+
+  helper_method :current_user
 end
