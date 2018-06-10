@@ -16,6 +16,7 @@ class User < ApplicationRecord
 
   def self.build_permissions(perms, other, target)
     perms.permits! :read
+    perms.permits! :write
   end
 
   def build_permissions(perms, other)

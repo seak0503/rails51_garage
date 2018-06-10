@@ -1,4 +1,6 @@
 class Staff::Api::Base < ApplicationController
+  protect_from_forgery with: :null_session
+
   include Garage::ControllerHelper
 
   def current_resource_owner

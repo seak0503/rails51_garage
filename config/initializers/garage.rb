@@ -1,7 +1,4 @@
-Garage.configure {
-  def cast_resource
-  end
-}
+Garage.configure {}
 
 Garage::TokenScope.configure do
   register :public, desc: 'accessing publicly available data' do
