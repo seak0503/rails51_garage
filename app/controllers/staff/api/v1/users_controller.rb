@@ -15,11 +15,20 @@ class Staff::Api::V1::UsersController < Staff::Api::Base
     @resource
   end
 
+  def update_resource
+    @resource.update!(user_params)
+    @resource
+  end
+
   def user_params
     params.permit(:name, :email, :password)
   end
 
   def respond_with_resources_options
     { paginate: true }
+  end
+
+  def respond_with_resource_options
+    { patch: { body: true } }
   end
 end
